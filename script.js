@@ -53,7 +53,9 @@ enterButton.addEventListener("click",
 
             status.textContent = "Check your email for the sign-in link.";
         } catch (err) {
-            console.log(err);
+            console.error("Error object:", err);
+            console.error("Code:", err.code);
+            console.error("Message:", err.message);
 
             status.textContent = err.message;
         }
