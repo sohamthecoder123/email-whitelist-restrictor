@@ -20,7 +20,7 @@ const auth = getAuth(app);
 console.log("Firebase initialized");
 
 const actionCodeSettings = {
-    url: "https://github.com/sohamthecoder123",
+    url: "https://sohamthecoder123.github.io/",
     handleCodeInApp: true
 }
 
