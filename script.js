@@ -2,8 +2,14 @@
 ///please build ffs
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
-import { sendSignInLinkToEmail } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
+import {
+    getAuth,
+    sendSignInLinkToEmail,
+    signInWithEmailLink,
+    isSignInWithEmailLink,
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -18,22 +24,48 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
+onAuthStateChanged(auth, (user) => {
+
+    if (user) {
+
+        console.log("Signed in:");
+        console.log(user.email);
+
+        status.textContent = `Welcome, ${user.email}!`;
+
+        emailField.hidden = true;
+        enterButton.hidden = true;
+        logoutButton.hidden = false;
+
+    } else {
+
+        console.log("Not signed in.");
+
+        status.textContent = "Please sign in.";
+
+        emailField.hidden = false;
+        enterButton.hidden = false;
+        logoutButton.hidden = true;
+
+    }
+});
+
 console.log("Firebase initialized");
 
 const actionCodeSettings = {
-    url: "https://sohamthecoder123.github.io/",
+    url: "https://sohamthecoder123.github.io/email-whitelist-restrictor/",
     handleCodeInApp: true
 }
 
 const emailField = document.getElementById("email");
 const enterButton = document.getElementById("enter");
 const status = document.getElementById("status");
-
+const logout = document.getElementById("logout");
 
 enterButton.addEventListener("click", 
     async () => {
         const email = emailField.value.trim();
-        alert(email);
+        //alert(email);
         emailField.value = ""; 
 
         if(!email) {
@@ -61,3 +93,44 @@ enterButton.addEventListener("click",
         }
     }
 )
+
+logout.addEventListener("click",
+    async () => {
+        try {
+            await signOut(auth);
+            status.textContent = "Signed Out."
+        } catch (err) {
+            console.log(err);
+        }
+    }
+)
+
+if (isSignInWithEmailLink(auth, window.location.href)) {
+
+    try {
+
+        console.log("Email sign-in link detected.");
+
+        let email = localStorage.getItem("emailForSignIn");
+
+        if (!email) {
+            email = prompt("Please confirm your email address");
+        }
+
+        const result = await signInWithEmailLink(
+            auth,
+            email,
+            window.location.href
+        );
+
+        localStorage.removeItem("emailForSignIn");
+
+        console.log("Successfully signed in!");
+        console.log(result.user);
+
+    } catch (err) {
+
+        console.error("Sign-in failed:", err);
+
+    }
+}
