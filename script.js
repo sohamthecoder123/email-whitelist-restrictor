@@ -1,7 +1,8 @@
-//https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js
+//https://www.gstatic.com/firebasejs/12.15.0/
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
+import { sendSignInLinkToEmail } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -17,3 +18,43 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 console.log("Firebase initialized");
+
+const actionCodeSettings = {
+    url: "https://github.com/sohamthecoder123",
+    handleCodeInApp = true
+}
+
+const emailField = document.getElementById("email");
+const enterButton = document.getElementById("enter");
+const status = document.getElementById("status");
+
+
+enterButton.addEventListener("click", 
+    async () => {
+        const email = emailField.value.trim();
+        alert(email);
+        emailField.value = ""; 
+
+        if(!email) {
+            status.textContent = "Please type something";
+            return;
+        }
+
+        try {
+            
+            await sendSignInLinkToEmail(
+                auth, 
+                email,
+                actionCodeSettings
+            );
+
+            localStorage.setItem("emailForSignIn", email);
+
+            status.textContent = "Check your email for the sign-in link.";
+        } catch (err) {
+            console.log(err);
+
+            status.textContent = err.message;
+        }
+    }
+)
