@@ -1,6 +1,5 @@
 //https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js
 
-import firebase from "firebase/compat/app";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
 
