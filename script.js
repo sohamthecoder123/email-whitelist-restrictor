@@ -35,7 +35,7 @@ onAuthStateChanged(auth, (user) => {
 
         emailField.hidden = true;
         enterButton.hidden = true;
-        logoutButton.hidden = false;
+        logout.hidden = false;
 
     } else {
 
@@ -45,7 +45,7 @@ onAuthStateChanged(auth, (user) => {
 
         emailField.hidden = false;
         enterButton.hidden = false;
-        logoutButton.hidden = true;
+        logout.hidden = true;
 
     }
 });
