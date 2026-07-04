@@ -21,7 +21,7 @@ console.log("Firebase initialized");
 
 const actionCodeSettings = {
     url: "https://github.com/sohamthecoder123",
-    handleCodeInApp = true
+    handleCodeInApp: true
 }
 
 const emailField = document.getElementById("email");
