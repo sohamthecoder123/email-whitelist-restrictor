@@ -1,0 +1,52 @@
+<!DOCTYPE html> 
+<html>
+    <head>
+        <title>
+            title
+        </title>
+    </head>
+    <body>
+        <label for="fname">Email:</label><br>
+        <input type="text" id="email" name="email"><br>
+        <button type="button" id="enter">Enter Email</button>
+
+        <script type="module">
+            // Import the functions you need from the SDKs you need
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+            // TODO: Add SDKs for Firebase products that you want to use
+            // https://firebase.google.com/docs/web/setup#available-libraries
+
+            // Your web app's Firebase configuration
+            const firebaseConfig = {
+                apiKey: "AIzaSyAIDBDxYpUO39alKgiYKv1MRsMrcBzMRD4",
+                authDomain: "email-whitelist-restrictor.firebaseapp.com",
+                projectId: "email-whitelist-restrictor",
+                storageBucket: "email-whitelist-restrictor.firebasestorage.app",
+                messagingSenderId: "506644108680",
+                appId: "1:506644108680:web:73b07f85d1dea93c4bd63d"
+            };
+
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+        </script>
+
+        <script>
+            let emailField = document.getElementById("email");
+            let enterButton = document.getElementById("enter");
+
+            let inputEmailAddress = "";
+
+            enterButton.addEventListener("click", 
+                () => {
+                    inputEmailAddress = emailField.value;
+                    alert(inputEmailAddress);
+                    emailField.value = "";  
+                }
+            )
+        </script>
+
+        <script></script>
+    </body> 
+</html>
+
+<!--  -->
